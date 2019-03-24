@@ -6,6 +6,7 @@ public class TestLexical {
 		// TODO Auto-generated method stub
 		System.out.println("Hello World.");
 		System.out.println("Yolo");
+		System.out.println("Test pull");
 	}
 
 }
