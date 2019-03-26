@@ -1,12 +1,14 @@
 package com.finalproject.lexical;
 
+import java.io.IOException;
+
 public class TestLexical {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		System.out.println("Hello World.");
-		System.out.println("Yolo");
-		System.out.println("Test pull");
+		String fileInput = "resources/input/Test05.txt";		
+		Lexical test = new Lexical();
+		test.xuLyFile(fileInput);
 	}
 
 }
