@@ -9,10 +9,10 @@
 -hien trang: da doc duoc file, xu ly nhung phan co ban
 
 - tach bang dau \\s, luu thanh 1 mang String xet tung chu trong mang
--//chu ~ can phai phan ra no la Keywords hoac la IDnumber
--//so ~ can phan phan biet no la so nguyen hoac so thuc
--//chu_kyhieudacbiet (vd a; a, y; 3411;)
--  tach thanh 1 mang chu cai
+-  //chu ~ can phai phan ra no la Keywords hoac la IDnumber
+-  //so ~ can phan phan biet no la so nguyen hoac so thuc
+-  //chu_kyhieudacbiet (vd a; a, y; 3411;)
+- tach thanh 1 mang chu cai
 -     phan tich tung chu cai
 -       //so ~ can phan phan biet no la so nguyen hoac so thuc
 -       //chu ~ can phai phan ra no la Keywords hoac la IDnumber
