@@ -31,21 +31,34 @@ public class Lexical {
 	//output: 1 file ghi ket qua
 	private void scanLine(String line, int numLine)
 	{
+		 String DOUBLE_Pattern = "[+-]?[\\d]+[.]{1}[\\d]+[eE]+[-+]?[\\d]+";
+		 
 		 String[] words = line.split("\\s");
 		 for(int i = 0;i< words.length;i++)
 		 {
 			 System.out.println(words[i] + " " + numLine);
 			  //xu ly truong hop: cac so, cac chu khong co di lien voi ky tu dac biet
-			 if(words[i].matches("[a-zA-Z0-9]*[\\w]*[+,;:=!\\\\(\\)><.-]+") == false)
+			 if(words[i].matches("[\\W]+") == false)
 			 {
 				 //truong hop: la so
 				 //can phai kiem tra no la so nguyen hay so thuc
 				 if(words[i].matches("\\d") == true)
 				 {
-					 //string.matches("-?\\d+(\\.\\d+)?")
-					 System.out.println(words[i]+" number "+ numLine +" "+ numLine + " pos pos");
-				 }
-				 
+					 if(words[i].matches("[+-]?\\d+") == true)
+					 {
+						 System.out.println(words[i]+" ICONSTnumber "+ numLine +" "+ numLine + " pos pos");
+					 }
+					 
+					 if(words[i].matches("[+-]?\\d+\\.{1}\\d*") == true) 
+					 {
+						 System.out.println(words[i]+" RCONSTnumber "+ numLine +" "+ numLine + " pos pos"); 
+					 }
+					 
+					 if(words[i].matches(DOUBLE_Pattern) == true)
+					 {
+						 System.out.println(words[i]+" DCONSTnumber "+ numLine +" "+ numLine + " pos pos"); 
+					 }
+				 }				 
 				 else
 				 {
 					 //truong hop: la chu
@@ -64,7 +77,7 @@ public class Lexical {
 				 //xu ly truong hop
 				 //truong hop a++, a+b, (a == 5), -a, a;
 				 //va truong hop la ky tu dac biet
-				 if(words[i].matches("[+,;:=!\\\\(\\)><.-]+") == true)
+				 if(words[i].matches("[+,;:=!\\\\(\\)><\\.-]+") == true)
 				 {
 					 switch(words[i])
 					 {
@@ -158,7 +171,7 @@ public class Lexical {
 				 }
 				 else
 				 { 
-					 //System.out.println(words[i]+" XXX " + numLine +" "+ numLine + " pos pos");
+					 System.out.println(words[i]+" XXX " + numLine +" "+ numLine + " pos pos");
 					 //xu ly truong hop a+5, a; a&&b;
 					 
 					// demSO++;  bien nay de kiem soat viec dem phan tich cung 1 so,
@@ -170,217 +183,291 @@ public class Lexical {
 					 //vd xar; se chia thanh x a r ;
 					 //minh chi can xet chu x sau do hinh thanh chu xar
 					 //tranh phai xet cac chu dung sau (skip cac chu đo) de chuyen qua ';'
-					  
-					   char[] list = words[i].toCharArray(); // bien thanh mang chu cai vd 34111;
-					                                         //se thanh list = [3,4,1,1,1,;]
-					   char peek = ' '; //xet chu hien tai
-					   int m;
-					   int demSO = 0;
-					   int demChu = 0;
-					   for(int j = 0;j<list.length;j++)
-					   {
-						   peek = list[j];
-						   //System.out.println(peek);
+						   char[] list = words[i].toCharArray(); // bien thanh mang chu cai vd 34111;
+                           //se thanh list = [3,4,1,1,1,;]
+						   char peek = ' '; //xet chu hien tai
+						   int m;
+						   int demSO = 0;
+						   int demChu = 0;
+						   int demDau = 0;// kiem soat viec phan tich cac dau <= >= <> := ..   
 						   
-						   //chu
-						   if(Character.isLetter(peek) == true)
+						   for(int j = 0;j<list.length;j++)
 						   {
-							   if(demChu > 0)
-							   {
-								   continue;
-							   }
-							   demChu++;
-							   StringBuilder b = new StringBuilder();
-							   b.append(peek);
-							   m = j;
-							   m++;
-							   peek = list[m];
-							  
-						       while(Character.isLetter(peek) == true)
-						       {
-						    	   if(m == list.length)
-						    	   {
-						    		   break;
-						    	   }
-						    	   b.append(peek);
-						    	   m++;
-						    	   peek = list[m];
-						    	   demChu++;
-						       }
-						       
-						       if(b != null)
-						       {
-						    	   System.out.println(b.toString()+" words " + numLine +" "+ numLine + " pos pos");
-						    	   peek = ' ';
-						       }
-						   }
-						   
-						   //so
-						   if(Character.isDigit(peek) == true)
-						   {
-							   if(demSO > 0)
-							   {
-								   continue;
-							   }
-							   int v = 0;
-							   m = j;
-							   do {
-								   demSO++; // bien nay de kiem soat viec dem phan tich cung 1 so, vd 34111
-								   v = 10 * v + Character.getNumericValue(peek);
-								   m++;
-								   peek = list[m];
-							   }
-							   while(Character.isDigit(peek) == true);
+							   peek = list[j];
+							   System.out.println(peek);
 							   
-							   if(peek != '.')
+							   //chu
+							   if(Character.isLetter(peek) == true)
 							   {
-								   System.out.println(String.valueOf(v)+" ICONSTnumber " + numLine +" "+ numLine + " pos pos");
+								   if(demChu > 0)
+								   {
+									   continue;
+								   }
+								   demChu++;
+								   StringBuilder b = new StringBuilder();
+								   b.append(peek);
+								   m = j;
+								   m++;
+								   
+								   peek = list[m];
+								  
+							       while(Character.isLetter(peek) == true)
+							       {
+							    	   if(m == list.length)
+							    	   {
+							    		   break;
+							    	   }
+							    	   b.append(peek);
+							    	   m++;
+							    	   peek = list[m];
+							    	   demChu++;
+							       }
+							       
+							       if(b != null)
+							       {
+							    	   System.out.println(b.toString()+" words " + numLine +" "+ numLine + " pos pos");
+							    	   peek = ' ';
+							       }
+							   }
+							   
+							   //so
+							   if(Character.isDigit(peek) == true)
+							   {
+								   if(demSO > 0)
+								   {
+									   continue;
+								   }
+								   int v = 0;
+								   m = j;
+								   do {
+									   demSO++; // bien nay de kiem soat viec dem phan tich cung 1 so, vd 34111
+									   v = 10 * v + Character.getNumericValue(peek);
+									   m++;
+									   peek = list[m];
+								   }
+								   while(Character.isDigit(peek) == true);
+								   
+								   if(peek != '.')
+								   {
+									   System.out.println(String.valueOf(v)+" ICONSTnumber " + numLine +" "+ numLine + " pos pos");
+									   peek = ' ';
+								   }
+								   else
+								   {
+									   //xet phan sau dau . (phan so thuc)
+									   float x = v, d = 10;
+									   m++;
+					                   peek = list[m];
+					                   while(Character.isDigit(peek) == true)
+					                   {
+					                	    demSO++;
+					                	    x = x + Character.getNumericValue(peek) / d;
+					                	    d = d * 10;
+					                	    m++;
+					                	    peek = list[m];
+					                   }
+					                   
+					                   if(peek != 'e' || peek != 'E')
+					                   {
+					                	   System.out.println(String.valueOf(x) + " RCONSTnumber " + numLine +" " +numLine + " pos pos");
+					                	   peek = ' ';
+					                   }
+					                   else
+					                   {
+					                	   String x_string = String.valueOf(x) + peek;
+					                	   m++;
+					                	   peek = list[m];
+					                	   switch(peek)
+					                	   {
+					                	       case '+':
+					                	       {
+					                	    	   peek = list[m+1];
+					                	    	   v = 0;
+					                	    	   while(Character.isDigit(peek) == true)
+					                	    	   {
+					                	    		   demSO++; // bien nay de kiem soat viec dem phan tich cung 1 so, vd 34111
+													   v = 10 * v + Character.getNumericValue(peek);
+													   m++;
+													   peek = list[m];
+					                	    	   }
+					                	    	   
+					                	    	   x_string = x_string + "-" +String.valueOf(v);
+					                	    	   break;
+					                	       }
+					                	       case '-':
+					                	       {
+					                	    	   peek = list[m+1];
+					                	    	   v = 0;
+					                	    	   while(Character.isDigit(peek) == true)
+					                	    	   {
+					                	    		   demSO++; // bien nay de kiem soat viec dem phan tich cung 1 so, vd 34111
+													   v = 10 * v + Character.getNumericValue(peek);
+													   m++;
+													   peek = list[m];
+					                	    	   }
+					                	    	   
+					                	    	   x_string = x_string + "+" +String.valueOf(v);
+					                	    	   break;
+					                	       }
+					                	       
+					                	       default:
+					                	       {   
+						                	    	   peek = list[m+1];
+						                	    	   v = 0;
+						                	    	   while(Character.isDigit(peek) == true)
+						                	    	   {
+						                	    		   demSO++; // bien nay de kiem soat viec dem phan tich cung 1 so, vd 34111
+														   v = 10 * v + Character.getNumericValue(peek);
+														   m++;
+														   peek = list[m];
+						                	    	   }
+						                	    	   x_string = x_string + String.valueOf(v);
+					                	       }
+					                	   }
+					                	   
+					                	   System.out.println(x_string + " DCONSTnumber "+ numLine +" "+numLine+" pos pos");
+					                	   peek = ' ';
+					                   }
+								   }
+							   }
+							   
+							   //kytudacbiet
+							   
+							   if(demDau > 0)
+							   {
 								   peek = ' ';
 							   }
-							   else
-							   {
-								   //xet phan sau dau . (phan so thuc)
-							   }
+							   
+							   switch(peek)
+								 {
+								    case ';':
+								    {
+								    	System.out.println(peek+" SEMInumber " + numLine +" "+ numLine + " pos pos");
+								    	break;
+								    }
+								    
+								    case ':':
+								    {
+								    	if(list[j+1] == '=')
+								    	{
+								    		System.out.println(peek+" COLEQnumber " + numLine +" "+ numLine + " pos pos");
+								    		demDau++;
+								    	}
+								    	else
+								    	{
+								    		System.out.println(peek+" COLONnumber " + numLine +" "+ numLine + " pos pos");
+								    	}
+								    	
+								    	break;
+								    }
+								    
+								    case ',':
+								    {
+								    	System.out.println(peek+" COMMAnumber " + numLine +" "+ numLine + " pos pos");
+								    	break;
+								    }
+								    
+								    case '.':
+								    {
+								    	if(list[j+1] == '.')
+								    	{
+								    		System.out.println(peek+" DOTDOTnumber " + numLine +" "+ numLine + " pos pos");
+								    		demDau++;
+								    	}
+								    	else
+								    	{
+								    		System.out.println(peek+" DOTnumber" + numLine +" "+ numLine + " pos pos");
+								    	}
+								    	
+								    	break;
+								    }
+								    
+								    case '(':
+								    {
+								    	System.out.println(peek+" LPARENnumber " + numLine +" "+ numLine + " pos pos");
+								    	break;
+								    }
+								    
+								    case ')':
+								    {
+								    	System.out.println(peek+" RPARENnumber " + numLine +" "+ numLine + " pos pos");
+								    	break;
+								    }
+								    
+								    case '<':
+								    {
+								    	if(list[j+1] == '=')
+								    	{
+								    		System.out.println(peek+" LEnumber " + numLine +" "+ numLine + " pos pos");	
+								    		demDau++;
+								    	}
+								    	else if(list[j+1] == '>')
+								    	{
+								    		System.out.println(peek+" NEnumber " + numLine +" "+ numLine + " pos pos");
+								    		demDau++;
+								    	}
+								    	else
+								    	{
+								    		System.out.println(peek+" LTnumber " + numLine +" "+ numLine + " pos pos");
+								    	}
+								    	
+								    	break;
+								    }
+								    
+								    case '>':
+								    {
+								    	if(list[j+1] == '=')
+								    	{
+								    		System.out.println(peek+" GEnumber " + numLine +" "+ numLine + " pos pos");
+								    		demDau++;
+								    	}
+								    	else
+								    	{
+								    		System.out.println(peek+" GTnumber " + numLine +" "+ numLine + " pos pos");
+								    	}
+								    	
+								    	break;
+								    }
+								    
+								    case '=':
+								    {
+								    	System.out.println(peek+" EQnumber " + numLine +" "+ numLine + " pos pos");
+								    	break;
+								    }
+								    
+								    case '-':
+								    {
+								    	System.out.println(peek+" MINUSnumber " + numLine +" "+ numLine + " pos pos");
+								    	break;
+								    }
+								    
+								    case '+':
+								    {
+								    	if(list[i+1] == '+')
+								    	{
+								    		demDau++;
+								    	}
+								    	else
+								    	{
+								    		System.out.println(peek+" PLUSnumber " + numLine +" "+ numLine + " pos pos");
+								    	}
+								    	
+								    	break;
+								    }
+								    
+								    case '*':
+								    {
+								    	System.out.println(peek+" TIMESnumber " + numLine +" "+ numLine + " pos pos");
+								    	break;
+								    }
+
+								 }
 							   
 						   }
-						   
-						   //kytudacbiet
-						   int demDau = 0;// kiem soat viec phan tich cac dau <= >= <> := ..
-						   
-						   if(demDau > 0)
-						   {
-							   peek = ' ';
-						   }
-						   
-						   switch(peek)
-							 {
-							    case ';':
-							    {
-							    	System.out.println(peek+" SEMInumber " + numLine +" "+ numLine + " pos pos");
-							    	break;
-							    }
-							    
-							    case ':':
-							    {
-							    	if(list[j+1] == '=')
-							    	{
-							    		System.out.println(peek+" COLEQnumber " + numLine +" "+ numLine + " pos pos");
-							    		demDau++;
-							    	}
-							    	else
-							    	{
-							    		System.out.println(peek+" COLONnumber " + numLine +" "+ numLine + " pos pos");
-							    	}
-							    	
-							    	break;
-							    }
-							    
-							    case ',':
-							    {
-							    	System.out.println(peek+" COMMAnumber " + numLine +" "+ numLine + " pos pos");
-							    	break;
-							    }
-							    
-							    case '.':
-							    {
-							    	if(list[j+1] == '.')
-							    	{
-							    		System.out.println(peek+" DOTDOTnumber " + numLine +" "+ numLine + " pos pos");
-							    		demDau++;
-							    	}
-							    	else
-							    	{
-							    		System.out.println(peek+" DOTnumber" + numLine +" "+ numLine + " pos pos");
-							    	}
-							    	
-							    	break;
-							    }
-							    
-							    case '(':
-							    {
-							    	System.out.println(peek+" LPARENnumber " + numLine +" "+ numLine + " pos pos");
-							    	break;
-							    }
-							    
-							    case ')':
-							    {
-							    	System.out.println(peek+" RPARENnumber " + numLine +" "+ numLine + " pos pos");
-							    	break;
-							    }
-							    
-							    case '<':
-							    {
-							    	if(list[j+1] == '=')
-							    	{
-							    		System.out.println(peek+" LEnumber " + numLine +" "+ numLine + " pos pos");	
-							    		demDau++;
-							    	}
-							    	else if(list[j+1] == '>')
-							    	{
-							    		System.out.println(peek+" NEnumber " + numLine +" "+ numLine + " pos pos");
-							    		demDau++;
-							    	}
-							    	else
-							    	{
-							    		System.out.println(peek+" LTnumber " + numLine +" "+ numLine + " pos pos");
-							    	}
-							    	
-							    	break;
-							    }
-							    
-							    case '>':
-							    {
-							    	if(list[j+1] == '=')
-							    	{
-							    		System.out.println(peek+" GEnumber " + numLine +" "+ numLine + " pos pos");
-							    		demDau++;
-							    	}
-							    	else
-							    	{
-							    		System.out.println(peek+" GTnumber " + numLine +" "+ numLine + " pos pos");
-							    	}
-							    	
-							    	break;
-							    }
-							    
-							    case '=':
-							    {
-							    	System.out.println(peek+" EQnumber " + numLine +" "+ numLine + " pos pos");
-							    	break;
-							    }
-							    
-							    case '-':
-							    {
-							    	System.out.println(peek+" MINUSnumber " + numLine +" "+ numLine + " pos pos");
-							    	break;
-							    }
-							    
-							    case '+':
-							    {
-							    	if(list[i+1] == '+')
-							    	{
-							    		demDau++;
-							    	}
-							    	else
-							    	{
-							    		System.out.println(peek+" PLUSnumber " + numLine +" "+ numLine + " pos pos");
-							    	}
-							    	
-							    	break;
-							    }
-							    
-							    case '*':
-							    {
-							    	System.out.println(peek+" TIMESnumber " + numLine +" "+ numLine + " pos pos");
-							    	break;
-							    }
-
-							 }
-						   
-					   }
+					 }
 				 }
-				 
-			 }
-		 }	
-	}
+			 }		 
+		 
+	}	
 }
+
