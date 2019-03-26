@@ -19,3 +19,4 @@
 -       //ky tu dac biet
 -         +ky tu 1 ngoi (> < =)
 -         +ky tu 2 ngoi (>= <= <> :=)
+- code them phan kiem tra chuoi la so nguyen, so thuc (4:30 26/3/2019)
