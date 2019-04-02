@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //lop chua cac phuong thuc xu ly tu vung
 public class Lexical {
@@ -34,11 +36,14 @@ public class Lexical {
 		 String DOUBLE_Pattern = "[+-]?[\\d]+[.]{1}[\\d]+[eE]+[-+]?[\\d]+";
 		 
 		 String[] words = line.split("\\s");
+		 
+		 int[] position = new int[2]; //mang luu hai vi tri [bat dau, ket thuc] cua 1 string
+		 
 		 for(int i = 0;i< words.length;i++)
 		 {
-			 System.out.println(words[i] + " " + numLine);
+			 //System.out.println(words[i] + " " + numLine);
 			  //xu ly truong hop: cac so, cac chu khong co di lien voi ky tu dac biet
-			 if(words[i].matches("[\\W]+") == false)
+			 if(words[i].matches("\\w+") == true)
 			 {
 				 //truong hop: la so
 				 //can phai kiem tra no la so nguyen hay so thuc
@@ -46,17 +51,21 @@ public class Lexical {
 				 {
 					 if(words[i].matches("[+-]?\\d+") == true)
 					 {
-						 System.out.println(words[i]+" ICONSTnumber "+ numLine +" "+ numLine + " pos pos");
+						 position = indexOf(words[i], line);
+						 System.out.println(words[i]+" ICONSTnumber "+ numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
+						 
 					 }
 					 
 					 if(words[i].matches("[+-]?\\d+\\.{1}\\d*") == true) 
 					 {
-						 System.out.println(words[i]+" RCONSTnumber "+ numLine +" "+ numLine + " pos pos"); 
+						 position = indexOf(words[i], line);
+						 System.out.println(words[i]+" RCONSTnumber "+ numLine +" "+ numLine + " " +position[0]+ " " + position[1]); 
 					 }
 					 
 					 if(words[i].matches(DOUBLE_Pattern) == true)
 					 {
-						 System.out.println(words[i]+" DCONSTnumber "+ numLine +" "+ numLine + " pos pos"); 
+						 position = indexOf(words[i], line);
+						 System.out.println(words[i]+" DCONSTnumber "+ numLine +" "+ numLine + " " +position[0]+ " " + position[1]); 
 					 }
 				 }				 
 				 else
@@ -68,7 +77,8 @@ public class Lexical {
 						 continue;
 					 }
 					
-				     System.out.println(words[i]+" words " + numLine +" "+ numLine + " pos pos");
+					 position = indexOf(words[i], line);
+				     System.out.println(words[i]+" words " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					 
 				 }	  
 			 }
@@ -83,95 +93,112 @@ public class Lexical {
 					 {
 					    case ";":
 					    {
-					    	System.out.println(words[i]+" SEMInumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf(words[i], line);
+					    	System.out.println(words[i]+" SEMInumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    case ":":
 					    {
-					    	System.out.println(words[i]+" COLONnumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf(words[i], line);
+					    	System.out.println(words[i]+" COLONnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    case ",":
 					    {
-					    	System.out.println(words[i]+" COMMAnumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf(words[i], line);
+					    	System.out.println(words[i]+" COMMAnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    case ".":
 					    {
-					    	System.out.println(words[i]+" DOTnumber" + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf(words[i], line);
+					    	System.out.println(words[i]+" DOTnumber" + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    case "(":
 					    {
-					    	System.out.println(words[i]+" LPARENnumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf(words[i], line);
+					    	System.out.println(words[i]+" LPARENnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    case ")":
 					    {
-					    	System.out.println(words[i]+" RPARENnumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf(words[i], line);
+					    	System.out.println(words[i]+" RPARENnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    case "<":
 					    {
-					    	System.out.println(words[i]+" LTnumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf(words[i], line);
+					    	System.out.println(words[i]+" LTnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    case ">":
 					    {
-					    	System.out.println(words[i]+" GTnumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf(words[i], line);
+					    	System.out.println(words[i]+" GTnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    case "=":
 					    {
-					    	System.out.println(words[i]+" EQnumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf(words[i], line);
+					    	System.out.println(words[i]+" EQnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    case "-":
 					    {
-					    	System.out.println(words[i]+" MINUSnumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf(words[i], line);
+					    	System.out.println(words[i]+" MINUSnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    case "+":
 					    {
-					    	System.out.println(words[i]+" PLUSnumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf_2(words[i], line);
+					    	System.out.println(words[i]+" PLUSnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    case "*":
 					    {
-					    	System.out.println(words[i]+" TIMESnumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf_2(words[i], line);
+					    	System.out.println(words[i]+" TIMESnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    	
 					    case "..":
 					    {
-					    	System.out.println(words[i]+" DOTDOTnumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf(words[i], line);
+					    	System.out.println(words[i]+" DOTDOTnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    case ":=":
 					    {
-					    	System.out.println(words[i]+" COLEQnumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf(words[i], line);
+					    	System.out.println(words[i]+" COLEQnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    case "<=":
 					    {
-					    	System.out.println(words[i]+" LEnumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf(words[i], line);
+					    	System.out.println(words[i]+" LEnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    case ">=":
 					    {
-					    	System.out.println(words[i]+" GEnumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf(words[i], line);
+					    	System.out.println(words[i]+" GEnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					    case "<>":
 					    {
-					    	System.out.println(words[i]+" NEnumber " + numLine +" "+ numLine + " pos pos");
+					    	position = indexOf(words[i], line);
+					    	System.out.println(words[i]+" NEnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					    	break;
 					    }
 					 }
 				 }
 				 else
 				 { 
-					 System.out.println(words[i]+" XXX " + numLine +" "+ numLine + " pos pos");
+					 //System.out.println(words[i]+" XXX " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 					 //xu ly truong hop a+5, a; a&&b;
 					 
 					// demSO++;  bien nay de kiem soat viec dem phan tich cung 1 so,
@@ -194,7 +221,7 @@ public class Lexical {
 						   for(int j = 0;j<list.length;j++)
 						   {
 							   peek = list[j];
-							   System.out.println(peek);
+							   //System.out.println(peek);
 							   
 							   //chu
 							   if(Character.isLetter(peek) == true)
@@ -225,7 +252,8 @@ public class Lexical {
 							       
 							       if(b != null)
 							       {
-							    	   System.out.println(b.toString()+" words " + numLine +" "+ numLine + " pos pos");
+							    	   position = indexOf(b.toString(), line);
+							    	   System.out.println(b.toString()+" words " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 							    	   peek = ' ';
 							       }
 							   }
@@ -249,7 +277,8 @@ public class Lexical {
 								   
 								   if(peek != '.')
 								   {
-									   System.out.println(String.valueOf(v)+" ICONSTnumber " + numLine +" "+ numLine + " pos pos");
+									   position = indexOf(String.valueOf(v), line);
+									   System.out.println(String.valueOf(v)+" ICONSTnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 									   peek = ' ';
 								   }
 								   else
@@ -269,7 +298,8 @@ public class Lexical {
 					                   
 					                   if(peek != 'e' || peek != 'E')
 					                   {
-					                	   System.out.println(String.valueOf(x) + " RCONSTnumber " + numLine +" " +numLine + " pos pos");
+					                	   position = indexOf(String.valueOf(x), line);
+					                	   System.out.println(String.valueOf(x) + " RCONSTnumber " + numLine +" " +numLine + " " +position[0]+ " " + position[1]);
 					                	   peek = ' ';
 					                   }
 					                   else
@@ -325,7 +355,8 @@ public class Lexical {
 					                	       }
 					                	   }
 					                	   
-					                	   System.out.println(x_string + " DCONSTnumber "+ numLine +" "+numLine+" pos pos");
+					                	   position = indexOf(x_string, line);
+					                	   System.out.println(x_string + " DCONSTnumber "+ numLine +" "+numLine+" " +position[0]+ " " + position[1]);
 					                	   peek = ' ';
 					                   }
 								   }
@@ -342,7 +373,8 @@ public class Lexical {
 								 {
 								    case ';':
 								    {
-								    	System.out.println(peek+" SEMInumber " + numLine +" "+ numLine + " pos pos");
+								    	position = indexOf(peek, line);
+								    	System.out.println(peek+" SEMInumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    	break;
 								    }
 								    
@@ -350,12 +382,14 @@ public class Lexical {
 								    {
 								    	if(list[j+1] == '=')
 								    	{
-								    		System.out.println(peek+" COLEQnumber " + numLine +" "+ numLine + " pos pos");
+								    		position = indexOf(peek, line);
+								    		System.out.println(peek+" COLEQnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    		demDau++;
 								    	}
 								    	else
 								    	{
-								    		System.out.println(peek+" COLONnumber " + numLine +" "+ numLine + " pos pos");
+								    		position = indexOf(peek, line);
+								    		System.out.println(peek+" COLONnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    	}
 								    	
 								    	break;
@@ -363,7 +397,8 @@ public class Lexical {
 								    
 								    case ',':
 								    {
-								    	System.out.println(peek+" COMMAnumber " + numLine +" "+ numLine + " pos pos");
+								    	position = indexOf(peek, line);
+								    	System.out.println(peek+" COMMAnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    	break;
 								    }
 								    
@@ -371,12 +406,14 @@ public class Lexical {
 								    {
 								    	if(list[j+1] == '.')
 								    	{
-								    		System.out.println(peek+" DOTDOTnumber " + numLine +" "+ numLine + " pos pos");
+								    		position = indexOf(peek, line);
+								    		System.out.println(peek+" DOTDOTnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    		demDau++;
 								    	}
 								    	else
 								    	{
-								    		System.out.println(peek+" DOTnumber" + numLine +" "+ numLine + " pos pos");
+								    		position = indexOf(peek, line);
+								    		System.out.println(peek+" DOTnumber" + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    	}
 								    	
 								    	break;
@@ -384,13 +421,15 @@ public class Lexical {
 								    
 								    case '(':
 								    {
-								    	System.out.println(peek+" LPARENnumber " + numLine +" "+ numLine + " pos pos");
+								    	position = indexOf(peek, line);
+								    	System.out.println(peek+" LPARENnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    	break;
 								    }
 								    
 								    case ')':
 								    {
-								    	System.out.println(peek+" RPARENnumber " + numLine +" "+ numLine + " pos pos");
+								    	position = indexOf(peek, line);
+								    	System.out.println(peek+" RPARENnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    	break;
 								    }
 								    
@@ -398,17 +437,20 @@ public class Lexical {
 								    {
 								    	if(list[j+1] == '=')
 								    	{
-								    		System.out.println(peek+" LEnumber " + numLine +" "+ numLine + " pos pos");	
+								    		position = indexOf(peek, line);
+								    		System.out.println(peek+" LEnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    		demDau++;
 								    	}
 								    	else if(list[j+1] == '>')
 								    	{
-								    		System.out.println(peek+" NEnumber " + numLine +" "+ numLine + " pos pos");
+								    		position = indexOf(peek, line);
+								    		System.out.println(peek+" NEnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    		demDau++;
 								    	}
 								    	else
 								    	{
-								    		System.out.println(peek+" LTnumber " + numLine +" "+ numLine + " pos pos");
+								    		position = indexOf(peek, line);
+								    		System.out.println(peek+" LTnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    	}
 								    	
 								    	break;
@@ -418,12 +460,14 @@ public class Lexical {
 								    {
 								    	if(list[j+1] == '=')
 								    	{
-								    		System.out.println(peek+" GEnumber " + numLine +" "+ numLine + " pos pos");
+								    		position = indexOf(peek, line);
+								    		System.out.println(peek+" GEnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    		demDau++;
 								    	}
 								    	else
 								    	{
-								    		System.out.println(peek+" GTnumber " + numLine +" "+ numLine + " pos pos");
+								    		position = indexOf(peek, line);
+								    		System.out.println(peek+" GTnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    	}
 								    	
 								    	break;
@@ -431,13 +475,15 @@ public class Lexical {
 								    
 								    case '=':
 								    {
-								    	System.out.println(peek+" EQnumber " + numLine +" "+ numLine + " pos pos");
+								    	position = indexOf(peek, line);
+								    	System.out.println(peek+" EQnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    	break;
 								    }
 								    
 								    case '-':
 								    {
-								    	System.out.println(peek+" MINUSnumber " + numLine +" "+ numLine + " pos pos");
+								    	position = indexOf(peek, line);
+								    	System.out.println(peek+" MINUSnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    	break;
 								    }
 								    
@@ -449,7 +495,8 @@ public class Lexical {
 								    	}
 								    	else
 								    	{
-								    		System.out.println(peek+" PLUSnumber " + numLine +" "+ numLine + " pos pos");
+								    		position = indexOf(peek, line);
+								    		System.out.println(peek+" PLUSnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    	}
 								    	
 								    	break;
@@ -457,7 +504,8 @@ public class Lexical {
 								    
 								    case '*':
 								    {
-								    	System.out.println(peek+" TIMESnumber " + numLine +" "+ numLine + " pos pos");
+								    	position = indexOf(peek, line);
+								    	System.out.println(peek+" TIMESnumber " + numLine +" "+ numLine + " " +position[0]+ " " + position[1]);
 								    	break;
 								    }
 
@@ -469,5 +517,118 @@ public class Lexical {
 			 }		 
 		 
 	}	
+
+	//ham xac dinh vi tri bat dau va ket thuc cua 1 String
+	//xet cho cac truong + * ?, vv
+    private int[] indexOf_2(String word, String line)
+    {
+    	System.out.println(line);
+    	int[] pos = new int[2];
+    	char[] lineArr = line.toCharArray(); //du lieu cua dong hien tai trong file
+    	char[] wordArr = word.toCharArray(); //String dang xet
+    	int start= 0, end = 0;
+    	
+    		for(int j = 0;j< lineArr.length;j++)
+    		{
+    			if(wordArr[0] == lineArr[j])
+    			{
+    				start = j+1;
+    				break;
+    			}
+    		}
+    		
+    		for(int j = lineArr.length - 1;j >= 0;j--)
+    		{
+    			
+    			if(wordArr[wordArr.length - 1] == lineArr[j])
+    			{
+    				end = j+1;
+    				break;
+    			}
+    		}
+    		//System.out.println("["+word + "]: start: " + start + ", end: " + end);
+    		pos[0] = start;
+    		pos[1] = end;
+    		return pos;
+    }
+    
+    //ham xac dinh vi tri bat dau va ket thuc cua 1 Char
+    private int[] indexOf(char word, String line)
+    {
+    	int[] pos = new int[2];
+    	
+    	char[] lineArr = line.toCharArray(); //du lieu dong hien tai dang xet cua file
+    	int start= 0, end = 0;
+    	
+    		for(int j = 0;j< lineArr.length;j++)
+    		{
+    			if(word == lineArr[j])
+    			{
+    				start = j+1;
+    				break;
+    			}
+    		}
+    		
+    		for(int j = lineArr.length - 1;j >= 0;j--)
+    		{
+    			
+    			if(word == lineArr[j])
+    			{
+    				end = j+1;
+    				break;
+    			}
+    		}
+    	//System.out.println("["+word + "]: start: " + start + ", end: " + end);
+    	pos[0] = start;
+    	pos[1] = end;
+    	
+    	return pos;
+    	
+    }
+
+
+  //ham xac dinh vi tri bat dau va ket thuc cua 1 String
+    private int[] indexOf(String word, String line)
+    {
+    	int[] pos = new int[2];
+    	int start = 0, end = 0;
+    	
+    	if(word.length() == 1)
+    	{
+    	   String[] tmp = line.split("\\s");
+    	   for(int i = 0;i<tmp.length;i++)
+    	   {
+    		   if(word == tmp[i])
+    		   {
+    			   start  = 0;
+    			   end = 0;
+    		   }
+    	   }
+    	   pos[0] = start;
+    	   pos[1] = end;
+    	}
+    	else
+    	{
+    		Pattern patern = Pattern.compile(word);
+   		    Matcher result = patern.matcher(line);
+   		   // int i = 0;
+   		    while(result.find()) {
+   			 
+   				 // i++;
+   				  start = result.start();
+   				  end = result.end();
+   				 // System.out.println("Match "+i+" | Start: " + result.start() + " - End: " + result.end());	 
+   			 
+   		    }
+	   		 pos[0] = start+1;
+			 pos[1] = end;
+    		
+    	}
+    	
+    	return pos;
+    	
+    }
+
 }
+
 
