@@ -20,5 +20,6 @@
 -         +ky tu 1 ngoi (> < =)
 -         +ky tu 2 ngoi (>= <= <> :=)
 - code them phan kiem tra chuoi la so nguyen, so thuc (Done at 4:30 26/3/2019)
-== Update 4/2/2019
+
+=== Update 4/2/2019
     them ham tra gia tri bat dau va ket thuc cua 1 string, 1 char cua dong file
