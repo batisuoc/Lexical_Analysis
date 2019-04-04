@@ -4,16 +4,30 @@ import java.util.*;
 import java.util.regex.*;
 
 public class Dictionary {
-	private Map<String, String> dicts = new HashMap<String, String>();
-	Pattern pattern = null;
+	protected Map<String, String> dicts = new HashMap<String, String>();
 	
 	public Dictionary() {
+		//Dictionary of regex
 		this.dicts.put("WHITESPACE", "\\s");
+		this.dicts.put("SPECIALCHAR_AND_WORDNUMBER", "(?=.*[;,:=])(?=.*[a-zA-Z0-9]).{1,20}");
+		this.dicts.put("SPECIALCHAR", "[;,:=]+");
+		this.dicts.put("NUMBER", "\\d+");
+		this.dicts.put("WORD","[a-zA-Z]+");
 	}
 	
-	public boolean isWhiteSpace(String input) {
-		pattern = Pattern.compile(this.dicts.get("WHITESPACE"));
-		if(pattern.matcher(input).matches()) return true;
-		return false;
+	public String getSymbolNameSpecialToken(String token) {
+		switch (token) {
+		case "var":
+			return "VARnumber";
+		case ",":
+			return "COMMMAnumber";
+		case ";":
+			return "SEMInumber";
+		default:
+			return "";
+		}
 	}
+	
+	
+		
 }
