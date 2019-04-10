@@ -9,9 +9,9 @@ public class Dictionary {
 	public Dictionary() {
 		//Dictionary of regex
 		this.dicts.put("WHITESPACE", "\\s");
-		this.dicts.put("SPECIALCHAR_AND_WORDNUMBER", "(?=.*[;,:=])(?=.*[a-zA-Z0-9]).{1,20}");
-		this.dicts.put("SPECIALCHAR", "[;,:=]+");
-		this.dicts.put("NUMBER", "\\d+");
+		this.dicts.put("SPECIALCHAR_AND_WORDNUMBER", "(?=.*[;,:=\\+])(?=.*[a-zA-Z0-9]).{1,20}");
+		this.dicts.put("SPECIALCHAR", "[;,:=\\+]+");
+		this.dicts.put("NUMBER", "^[-+]?\\d+(\\.\\d+)?$");
 		this.dicts.put("WORD","[a-zA-Z]+");
 	}
 	
@@ -110,7 +110,7 @@ public class Dictionary {
 			return "LTnumber";
 		case ">":
 			return "GTnumber";
-		case "=":
+		case "==":
 			return "EQnumber";
 		case "-":
 			return "MINUSnumber";
@@ -125,7 +125,7 @@ public class Dictionary {
 		case "<>":
 			return "NEnumber";
 		default:
-			return "";
+			return "Error";
 		}
 	}
 	

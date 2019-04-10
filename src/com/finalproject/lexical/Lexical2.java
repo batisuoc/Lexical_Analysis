@@ -4,22 +4,23 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.*;
 
+import javafx.print.Printer;
+
 public class Lexical2 extends Dictionary {
 	private String inputFile;
 	private String[] words;
 	private List<Token> listToken;
 	private int tokenIndex = 0;
 	
-	public Lexical2(String inputFile) {
+	public Lexical2() {
 		super();
-		this.inputFile = inputFile;
 		listToken = new ArrayList<Token>();
 	}
 	
-	public void readFile() {
+	public void readFile(String inputFile) {
 		int numLine = 1;
 		try {
-			BufferedReader in = new BufferedReader(new FileReader(this.inputFile));
+			BufferedReader in = new BufferedReader(new FileReader(inputFile));
 			String line;
 			try {
 				while((line = in.readLine()) != null)
@@ -35,9 +36,30 @@ public class Lexical2 extends Dictionary {
 			System.out.println("Khong tim thay file.");
 		}
 		
-		for (Token token : listToken) {
-			System.out.println(token.toString());
+//		for (Token token : listToken) {
+//			System.out.println(token.toString());
+//		}
+		
+		
+	}
+	
+	public void writeFile(String outputFile) {
+		try {
+			try {
+				PrintWriter writer = new PrintWriter(outputFile, "UTF-8");
+				for (Token token : listToken) {
+					writer.println(token.toString());
+				}
+				writer.close();
+			} catch (UnsupportedEncodingException e) {
+				// TODO: handle exception
+				System.out.println("Khong dung ma code");
+			}
+		} catch (FileNotFoundException e) {
+			// TODO: handle exception
+			System.out.println("Khong tao duoc file");
 		}
+		
 	}
 	
 	public String toOutputString(String input, int stringLength, int position) {
@@ -57,12 +79,13 @@ public class Lexical2 extends Dictionary {
 		String charToken;
 		for (String string : this.words) {
 			if(string.matches(dicts.get("SPECIALCHAR_AND_WORDNUMBER"))) {
-				String numberChar = "";
 				int posNumChar = 0;
 				char[] listChar = string.toCharArray();
+				String numberChar = "";
 				for (int i = 0; i < listChar.length; i++) {
 					charToken = Character.toString(listChar[i]);
 					if(charToken.matches(dicts.get("SPECIALCHAR"))) {
+						numberChar = "";
 						listToken.add(tokenIndex, new Token(charToken, getSymbolNameSpecialToken(charToken), numLine, position));
 						tokenIndex++;
 						position = position + 1;
@@ -73,15 +96,31 @@ public class Lexical2 extends Dictionary {
 							if(j == 0) posNumChar = position;
 							numberChar += charToken;
 							position = position + 1;
-							charToken = Character.toString(listChar[j+1]);
-							j = j + 1;
+							if((j+1) < listChar.length) {
+								charToken = Character.toString(listChar[j+1]);
+								if(charToken.matches(dicts.get("SPECIALCHAR"))) {
+									posNumChar = position - 1;
+									j = j + 1;
+									break;
+								}
+								j = j + 1;
+							}
+							else {
+								posNumChar = position - 1;
+								j = j + 1;
+								break;
+							}
 						}
 						i = j;
 						listToken.add(tokenIndex, new Token(numberChar, "ICONSTnumber", numLine, posNumChar));
 						tokenIndex++;
 						i -= 1;//Lùi lại một index vì trong vòng lặp tăng thừa 1 index 
 					}
+					else if(charToken.equals("-")) {
+						numberChar = numberChar + "-";
+					}
 					else if(charToken.matches(dicts.get("WORD"))) {
+						numberChar = "";
 						listToken.add(tokenIndex, new Token(charToken, "IDnumber", numLine, position));
 						position = position + 1;
 						tokenIndex++;
@@ -109,16 +148,17 @@ public class Lexical2 extends Dictionary {
 				position = position + string.length() + 1;
 				tokenIndex++;
 			}
-			else if(string.equals("=")) {
-				if(listToken.get(tokenIndex-1).getSymbolName().equals("IDnumber")) {
+			else {
+				if(getSymbolNameSpecialToken(string).equals("Error")) {
 					listToken.add(tokenIndex, new Token(string, "Error", numLine, position));
 					break;
 				}
-			}
-			else {
-				listToken.add(tokenIndex, new Token(string, getSymbolNameSpecialToken(string), numLine, position));
-				position = position + string.length() + 1;
-				tokenIndex++;
+				else {
+					listToken.add(tokenIndex, new Token(string, getSymbolNameSpecialToken(string), numLine, position));
+					position = position + string.length() + 1;
+					tokenIndex++;
+				}
+				
 			}	
 		}
 		
