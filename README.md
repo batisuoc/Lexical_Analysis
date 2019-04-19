@@ -1,4 +1,4 @@
-# Lexical_Analysis
+#PHASE1: Lexical_Analysis
 - This project made by Trinh Hang Uoc and Nguyen Le Thanh Nhan
 
 ==Update 26/3/2019
@@ -22,7 +22,7 @@
 - code them phan kiem tra chuoi la so nguyen, so thuc (Done at 4:30 26/3/2019)
 
 
-===PHASE 2:
+===PHASE 2: PARSER
 ### Grammer BNF notation (Self-Defined):
 -program ::= 'program' programName; 'begin' Declaration statementList 'end.'
 
@@ -46,7 +46,7 @@
 
 -Assign ::= ID := Epxression
 
--Epression ::= <T> * Expression | T / Expression | T
+-Epression ::= T * Expression | T / Expression | T
   
 -T ::= F + T | F - T | F
   
