@@ -26,7 +26,7 @@
 ### Grammer BNF notation (Self-Defined):
 -program ::= 'program' programName; 'begin' Declaration statementList 'end.'
 
--Declaration ::= Type ID; | <mVar> | empty
+-Declaration ::= Type ID; | mVar | empty
   
 -mVar ::= Type ID | empty
 
@@ -34,7 +34,7 @@
 
 -IFstatement ::= 'if' condEpression 'then' trueStatements ['else' falseStatement] 'endif'
 
--condEpression ::= Expression <RO> Epression
+-condEpression ::= Expression RO Epression
   
 -trueStatement ::= statement | block
 
@@ -46,17 +46,17 @@
 
 -Assign ::= ID := Epxression
 
--Epression ::= <T> * Expression | <T> / Expression | <T>
+-Epression ::= <T> * Expression | T / Expression | T
   
--<T> ::= <F> + <T> | <F> - <T> | <F>
+-T ::= F + T | F - T | F
   
--<F> ::= -<F> | <R>
+-F ::= -F | R
   
--<R> ::= (Expression) | ID | NUM
+-R ::= (Expression) | ID | NUM
   
 -NUM ::= ICONST | FLOATCONST | CHARCONST
 
--<RO> ::= =< | >= | == | > | < | <>
+-RO ::= =< | >= | == | > | < | '<>'
 
 == can ban da test dung voi cac Testcase co san
 
