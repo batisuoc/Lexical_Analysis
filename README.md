@@ -24,30 +24,34 @@
 
 ===PHASE 2:
 ### Grammer BNF notation (Self-Defined):
-program ::= 'program' programName; 'begin' Declaration statementList 'end.'
-Declaration ::= Type ID; | <mVar> | empty
-mVar ::= Type ID | empty
+-program ::= 'program' programName; 'begin' Declaration statementList 'end.'
+-Declaration ::= Type ID; | <mVar> | empty
+-mVar ::= Type ID | empty
 
-statemetList ::= Statement | IfStatement | WhileStatement | Assign
+-statemetList ::= Statement | IfStatement | WhileStatement | Assign
 
-IFstatement ::= 'if' condEpression 'then' trueStatements ['else' falseStatement] 'endif'
+-IFstatement ::= 'if' condEpression 'then' trueStatements ['else' falseStatement] 'endif'
 
-condEpression ::= Expression <RO> Epression
-trueStatement ::= statement | block
-elseStatement ::= statement | block
-block ::=  'begin' statementList 'end'
+-condEpression ::= Expression <RO> Epression
+-trueStatement ::= statement | block
+-elseStatement ::= statement | block
+-block ::=  'begin' statementList 'end'
 
-WhileStatement ::= 'while' condEpression 'loop' block 'endloop'
+-WhileStatement ::= 'while' condEpression 'loop' block 'endloop'
 
-Assign ::= ID := Epxression
+-Assign ::= ID := Epxression
 
-Epression ::= <T> * Expression | <T> / Expression | <T>
-<T> ::= <F> + <T> | <F> - <T> | <F>
-<F> ::= -<F> | <R>
-<R> ::= (Expression) | ID | NUM
-NUM ::= ICONST | FLOATCONST | CHARCONST
+-Epression ::= <T> * Expression | <T> / Expression | <T>
+  
+-<T> ::= <F> + <T> | <F> - <T> | <F>
+  
+-<F> ::= -<F> | <R>
+  
+-<R> ::= (Expression) | ID | NUM
+  
+-NUM ::= ICONST | FLOATCONST | CHARCONST
 
-<RO> ::= =< | >= | == | > | < | <>
+-<RO> ::= =< | >= | == | > | < | <>
 
 == can ban da test dung voi cac Testcase co san
 
