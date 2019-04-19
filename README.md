@@ -25,7 +25,9 @@
 ===PHASE 2:
 ### Grammer BNF notation (Self-Defined):
 -program ::= 'program' programName; 'begin' Declaration statementList 'end.'
+
 -Declaration ::= Type ID; | <mVar> | empty
+  
 -mVar ::= Type ID | empty
 
 -statemetList ::= Statement | IfStatement | WhileStatement | Assign
@@ -33,8 +35,11 @@
 -IFstatement ::= 'if' condEpression 'then' trueStatements ['else' falseStatement] 'endif'
 
 -condEpression ::= Expression <RO> Epression
+  
 -trueStatement ::= statement | block
+
 -elseStatement ::= statement | block
+
 -block ::=  'begin' statementList 'end'
 
 -WhileStatement ::= 'while' condEpression 'loop' block 'endloop'
