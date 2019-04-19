@@ -1,0 +1,7 @@
+root: <Statement>
+child: <Expression>
+child: <Assign>
+child: y
+child: COLEnumber [:=]
+child: 31411
+child: SEMInumber [;]

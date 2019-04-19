@@ -1,0 +1,52 @@
+root: <Statement>
+child: <IfStatement>
+child: IFnumber [if]
+child: <condExp> child: <LESSTHANEQUAL>
+child: n
+child: LTnumber [<=]
+child: 1
+child: THENnumber [then]
+child: <TrueExp> child: <Assign>
+child: fibResult
+child: COLEnumber [:=]
+child: n
+child: SEMInumber [;]
+child: ELSEnumber [else]
+child: <FalseExp> {
+child: <Assign>
+child: i
+child: COLEnumber [:=]
+child: 2
+child: SEMInumber [;]
+child: WHILEnumber [while]
+child: <condExp>child: <MORETHANEQUAL>
+child: i
+child: GEnumber [>=]
+child: n
+Child: LOOPnumber [loop]
+{
+child: <Assign>
+child: tmp
+child: COLEnumber [:=]
+child: child: <PLUS>
+child: a
+child: PLUSnumber [+]
+child: b
+child: SEMInumber [;]
+child: <Assign>
+child: i
+child: COLEnumber [:=]
+child: child: <PLUS>
+child: i
+child: PLUSnumber [+]
+child: 1
+child: SEMInumber [;]
+		}
+Child: ENDLOOPnumber [endloop]
+child: <Assign>
+child: fibResult
+child: COLEnumber [:=]
+child: a
+child: SEMInumber [;]
+		}
+child: ENDIFnumber [endif]

@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.*;
 
-import javafx.print.Printer;
+
 
 public class Lexical2 extends Dictionary {
 	private String inputFile;
@@ -67,14 +67,14 @@ public class Lexical2 extends Dictionary {
 	}
 	
 	public void wordAnalysis(String line, int numLine) {
-		//Đếm số lượng tab có trong hàng đó 
+		//Ä�áº¿m sá»‘ lÆ°á»£ng tab cÃ³ trong hÃ ng Ä‘Ã³ 
 		char[] listLineChar = line.toCharArray();
 		int countTab = 0;
 		for (char c : listLineChar) {
 			if(c == '\t') countTab++;
 		}
 		this.words = line.split("\\s");
-		//Nếu có tab thì lấy số lượng tab x4 để cập nhật vị trí bắt đầu
+		//Náº¿u cÃ³ tab thÃ¬ láº¥y sá»‘ lÆ°á»£ng tab x4 Ä‘á»ƒ cáº­p nháº­t vá»‹ trÃ­ báº¯t Ä‘áº§u
 		int position = 1 + countTab * 4;
 		String charToken;
 		for (String string : this.words) {
@@ -114,7 +114,7 @@ public class Lexical2 extends Dictionary {
 						i = j;
 						listToken.add(tokenIndex, new Token(numberChar, "ICONSTnumber", numLine, posNumChar));
 						tokenIndex++;
-						i -= 1;//Lùi lại một index vì trong vòng lặp tăng thừa 1 index 
+						i -= 1;//LÃ¹i láº¡i má»™t index vÃ¬ trong vÃ²ng láº·p tÄƒng thá»«a 1 index 
 					}
 					else if(charToken.equals("-")) {
 						numberChar = numberChar + "-";
@@ -129,8 +129,8 @@ public class Lexical2 extends Dictionary {
 				position += 1;
 			}
 			else if(string.equals("")) {
-				//Nếu hàng đó có tab thì cho qua 
-				//Vì khi split string sẽ không đọc được kí tự "\t" mà chỉ đọc được kí tự "" và sẽ nhầm lẫn với trường hợp có dấu cách
+				//Náº¿u hÃ ng Ä‘Ã³ cÃ³ tab thÃ¬ cho qua 
+				//VÃ¬ khi split string sáº½ khÃ´ng Ä‘á»�c Ä‘Æ°á»£c kÃ­ tá»± "\t" mÃ  chá»‰ Ä‘á»�c Ä‘Æ°á»£c kÃ­ tá»± "" vÃ  sáº½ nháº§m láº«n vá»›i trÆ°á»�ng há»£p cÃ³ dáº¥u cÃ¡ch
 				if(countTab > 0) {
 					continue;
 				}

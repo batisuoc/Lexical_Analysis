@@ -15,6 +15,7 @@ public class Dictionary {
 		this.dicts.put("WORD","[a-zA-Z]+");
 	}
 	
+	
 	public String getSymbolNameSpecialWordToken(String token) {
 		switch (token) {
 		case "var":

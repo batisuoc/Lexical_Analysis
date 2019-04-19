@@ -1,0 +1,6 @@
+root: <var>
+child: VARnumber [var]
+child: Identifier [name=x]
+child: COMMAnumber [,]
+child: Identifier [name=y]
+child: SEMInumber [;]
