@@ -21,5 +21,33 @@
 -         +ky tu 2 ngoi (>= <= <> :=)
 - code them phan kiem tra chuoi la so nguyen, so thuc (Done at 4:30 26/3/2019)
 
-=== Update 4/2/2019
-    them ham tra gia tri bat dau va ket thuc cua 1 string, 1 char cua dong file
+
+===PHASE 2:
+### Grammer BNF notation (Self-Defined):
+program ::= 'program' programName; 'begin' Declaration statementList 'end.'
+Declaration ::= Type ID; | <mVar> | empty
+mVar ::= Type ID | empty
+
+statemetList ::= Statement | IfStatement | WhileStatement | Assign
+
+IFstatement ::= 'if' condEpression 'then' trueStatements ['else' falseStatement] 'endif'
+
+condEpression ::= Expression <RO> Epression
+trueStatement ::= statement | block
+elseStatement ::= statement | block
+block ::=  'begin' statementList 'end'
+
+WhileStatement ::= 'while' condEpression 'loop' block 'endloop'
+
+Assign ::= ID := Epxression
+
+Epression ::= <T> * Expression | <T> / Expression | <T>
+<T> ::= <F> + <T> | <F> - <T> | <F>
+<F> ::= -<F> | <R>
+<R> ::= (Expression) | ID | NUM
+NUM ::= ICONST | FLOATCONST | CHARCONST
+
+<RO> ::= =< | >= | == | > | < | <>
+
+== can ban da test dung voi cac Testcase co san
+
