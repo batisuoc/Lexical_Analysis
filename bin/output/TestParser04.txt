@@ -1,0 +1,14 @@
+root: <Statement>
+child: <IfStatement>
+child: IFnumber [if]
+child: <condExp> child: <LESSTHANEQUAL>
+child: n
+child: LTnumber [<=]
+child: 1
+child: THENnumber [then]
+child: <TrueExp> child: <Assign>
+child: fibResult
+child: COLEnumber [:=]
+child: n
+child: SEMInumber [;]
+child: ENDIFnumber [endif]

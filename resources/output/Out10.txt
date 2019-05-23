@@ -1,0 +1,12 @@
+if IFnumber 1 1 1 2
+n IDnumber 1 1 4 4
+== EQnumber 1 1 6 7
+0 ICONSTnumber 1 1 9 9
+then THENnumber 1 1 11 14
+return RETURNnumber 1 1 16 21
+:= COLEQnumber 1 1 23 24
+0 ICONSTnumber 1 1 26 26
+else ELSEnumber 2 2 5 8
+return RETURNnumber 2 2 10 15
+:= COLEQnumber 2 2 17 18
+(-n Error 2 2 20 22

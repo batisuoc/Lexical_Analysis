@@ -67,14 +67,14 @@ public class Lexical extends Dictionary {
 	}
 	
 	public void wordAnalysis(String line, int numLine) {
-		//Ä�áº¿m sá»‘ lÆ°á»£ng tab cÃ³ trong hÃ ng Ä‘Ã³ 
+		// 
 		char[] listLineChar = line.toCharArray();
 		int countTab = 0;
 		for (char c : listLineChar) {
 			if(c == '\t') countTab++;
 		}
 		this.words = line.split("\\s");
-		//Náº¿u cÃ³ tab thÃ¬ láº¥y sá»‘ lÆ°á»£ng tab x4 Ä‘á»ƒ cáº­p nháº­t vá»‹ trÃ­ báº¯t Ä‘áº§u
+		//
 		int position = 1 + countTab * 4;
 		String charToken;
 		for (String string : this.words) {

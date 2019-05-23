@@ -1,0 +1,10 @@
+root: <Statement>
+child: <Expression>
+child: <Assign>
+child: x
+child: COLEnumber [:=]
+child: child: <PLUS>
+child: y
+child: PLUSnumber [+]
+child: -2
+child: SEMInumber [;]
